@@ -7,11 +7,11 @@ $result = array(
 	'versities' => []
 );
 
-$versityFinder = new VersityFinder();
+$finder = new VersityFinder();
 
 try {
 	if (isset($_POST['subjectList']) && isset($_POST['gradeList']) && isset($_POST['background'])) {
-		$result['versities'] = $versityFinder->showAvailableVersityUnit($_POST['subjectList'], $_POST['gradeList'], $_POST['background']);
+		$result['versities'] = $finder->showAvailableVersityUnit($_POST['subjectList'], $_POST['gradeList'], $_POST['background']);
 	}
 	else {
 		$result['success'] = false;
