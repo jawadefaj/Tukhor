@@ -1,4 +1,4 @@
-<?
+<?php
 require_once __DIR__."/../class/VersityFinder.php";
 
 $result = array(
@@ -18,3 +18,4 @@ try {
 
 echo json_encode($result);
 die();
+?>
