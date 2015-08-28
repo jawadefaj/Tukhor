@@ -44,12 +44,12 @@ class VersityFinder extends Database{
                                                 'unit' => $row['unit']), $allVersities)) === false) {
                     continue;
                 }
-                switch ($row[logicType]) {
+                switch ($row['logicType']) {
                     /*
                     other cases
                     */
                     case 'addMinimum':
-                        $satisfy = addMinimum($subjectList, $gradeList, $row['code']);
+                        $satisfy = true;//$this->addMinimum($subjectList, $gradeList, $row['code']);
                         break;
                     /*
                     other cases
@@ -57,17 +57,16 @@ class VersityFinder extends Database{
                     default:
                         $satisfy = false;
                 }
-                if (!$satisfy && 
-                    ($key = array_search(array('versity' => $row['versity'], 
-                                                'unit' => $row['unit']), $allVersities)) !== false) {
-                    unset($allVersities[$key]);
+                if (!$satisfy) { 
+                    $key = array_search(array('versity' => $row['versity'], 'unit' => $row['unit']), $allVersities);
+                    $allVersities[$key]['unit'] = "Rejected";
                 }
             }
             $count = count($allVersities);
             $availableVersities = [];
             for ($i=0; $i<$count; $i++) {
-                if(isset($allVersities[$i])) {
-                    $availableVersities[] = $allVersities;
+                if($allVersities[$i]['unit'] != "Rejected") {
+                    $availableVersities[] = $allVersities[$i];
                 }
             }
             return $availableVersities;
@@ -92,7 +91,7 @@ class VersityFinder extends Database{
             $total = 0;
             for ($i=0; $i<$count; $i++) {
                 if(($key = array_search($subjectList[$i], $toBeTestedSubjects)) !== false) {
-                    $total += $gradeList[i];
+                    $total += $gradeList[$i];
                 }
             }
             return $total >= $minimumValue;
