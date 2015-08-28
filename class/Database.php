@@ -1,4 +1,4 @@
-<?
+<?php
 /**
 *Database connection handler
 */
@@ -14,4 +14,4 @@ class Database {
 		return $database;
 	}
 }
-
+?>
