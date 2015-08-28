@@ -1,5 +1,5 @@
 <?
-require_once __DIR__."/../class/VersityFinder.php";
+require_once __DIR__."/../class/DataHandler.php";
 
 $result = array(
 	'success' => true,
@@ -7,10 +7,10 @@ $result = array(
 	'versities' => []
 );
 
-$versityFinder = new VersityFinder();
+$handler = new DataHandler();
 
 try {
-	$result['versities'] = $versityFinder->showAllVersityName();
+	$result['versities'] = $handler->getVersityName();
 } catch (Exception $ex) {
 	$result['success'] = false;
 	$result['message'] = $ex->getMessage();

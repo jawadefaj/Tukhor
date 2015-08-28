@@ -40,8 +40,8 @@ class VersityFinder extends Database{
                                         WHERE background = ?");
             $stmt->execute(array($background));
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                if (($key = array_search(array('versity' => $row['versity'], 
-                                                'unit' => $row['unit']), $allVersities)) === false) {
+                $key = array_search(array('versity' => $row['versity'], 'unit' => $row['unit']), $allVersities);
+                if ($allVersities[$key]['unit'] === "Rejected") {
                     continue;
                 }
                 switch ($row['logicType']) {
@@ -49,7 +49,7 @@ class VersityFinder extends Database{
                     other cases
                     */
                     case 'addMinimum':
-                        $satisfy = true;//$this->addMinimum($subjectList, $gradeList, $row['code']);
+                        $satisfy = $this->addMinimum($subjectList, $gradeList, $row['code']);
                         break;
                     /*
                     other cases
