@@ -18,5 +18,10 @@ if(isset($_POST['versity'])) {
 	}
 }
 
+else {
+	$result['success'] = false;
+	$result['message'] = "Data didn't pass";
+}
+
 echo json_encode($result);
 die();

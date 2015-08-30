@@ -54,6 +54,16 @@ class VersityRequirementAdmin extends Database{
                     $stmt = $database->prepare("INSERT INTO AddMinimum (code, subject, val)
                                         VALUES (?, ?, ?)");
                     $stmt->execute(array($theCode, $subjectList[$i], $minimumValue));
+                    $stmt = $database->prepare("SELECT COUNT(*) as rowCount
+                                        FROM Subject
+                                        WHERE subject = ?");
+                    $stmt->execute(array($subjectList[$i]));
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($row['rowCount'] === 0) {
+                        $stmt = $database->prepare("INSERT INTO Subject (subject, background)
+                                        VALUES (?, ?)");
+                        $stmt->execute(array($subjectList[$i], $background));
+                    }
                 }
             }
             $stmt = $database->prepare("SELECT COUNT(*) as rowCount
@@ -117,6 +127,16 @@ class VersityRequirementAdmin extends Database{
                     $stmt = $database->prepare("INSERT INTO LeastSubjectCount (code, subject, leastCount)
                                         VALUES (?, ?, ?)");
                     $stmt->execute(array($theCode, $subjectList[$i], $minimumCount));
+                    $stmt = $database->prepare("SELECT COUNT(*) as rowCount
+                                        FROM Subject
+                                        WHERE subject = ?");
+                    $stmt->execute(array($subjectList[$i]));
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($row['rowCount'] === 0) {
+                        $stmt = $database->prepare("INSERT INTO Subject (subject, background)
+                                        VALUES (?, ?)");
+                        $stmt->execute(array($subjectList[$i], $background));
+                    }
                 }
             }
             $stmt = $database->prepare("SELECT COUNT(*) as rowCount
@@ -180,6 +200,16 @@ class VersityRequirementAdmin extends Database{
                     $stmt = $database->prepare("INSERT INTO LeastSubjectLeastGrade (code, subject, val, minCount)
                                         VALUES (?, ?, ?, ?)");
                     $stmt->execute(array($theCode, $subjectList[$i], $minimumGrade, $minimumCount));
+                    $stmt = $database->prepare("SELECT COUNT(*) as rowCount
+                                        FROM Subject
+                                        WHERE subject = ?");
+                    $stmt->execute(array($subjectList[$i]));
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($row['rowCount'] === 0) {
+                        $stmt = $database->prepare("INSERT INTO Subject (subject, background)
+                                        VALUES (?, ?)");
+                        $stmt->execute(array($subjectList[$i], $background));
+                    }
                 }
             }
             $stmt = $database->prepare("SELECT COUNT(*) as rowCount
@@ -243,6 +273,16 @@ class VersityRequirementAdmin extends Database{
                     $stmt = $database->prepare("INSERT INTO MaxSubjectLeastGrade (code, subject, val, maxCount)
                                         VALUES (?, ?, ?, ?)");
                     $stmt->execute(array($theCode, $subjectList[$i], $minimumGrade, $maxCount));
+                    $stmt = $database->prepare("SELECT COUNT(*) as rowCount
+                                        FROM Subject
+                                        WHERE subject = ?");
+                    $stmt->execute(array($subjectList[$i]));
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($row['rowCount'] === 0) {
+                        $stmt = $database->prepare("INSERT INTO Subject (subject, background)
+                                        VALUES (?, ?)");
+                        $stmt->execute(array($subjectList[$i], $background));
+                    }
                 }
             }
             $stmt = $database->prepare("SELECT COUNT(*) as rowCount
@@ -281,6 +321,16 @@ class VersityRequirementAdmin extends Database{
                 $stmt = $database->prepare("INSERT INTO MinLogic (code, subject, val)
                                         VALUES (?, ?, ?)");
                 $stmt->execute(array($theCode, $subject, $minimumGrade));
+                $stmt = $database->prepare("SELECT COUNT(*) as rowCount
+                                    FROM Subject
+                                    WHERE subject = ?");
+                $stmt->execute(array($subject));
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($row['rowCount'] === 0) {
+                    $stmt = $database->prepare("INSERT INTO Subject (subject, background)
+                                    VALUES (?, ?)");
+                    $stmt->execute(array($subject, $background));
+                }
             }
             $stmt = $database->prepare("SELECT COUNT(*) as rowCount
                                         FROM Requirement

@@ -9,55 +9,221 @@ class VersityFinder extends Database{
     function __construct() {
     }
 
-    public function showAllVersityName() {
-        $database = $this->connect_database();
-        try {
-            $stmt = $database->prepare("SELECT DISTINCT versity, unit FROM Requirement");
-            $stmt->execute();
-            $rows = [];
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $rows[] = $row;
-            }
-            return $rows;
-        } catch (PDOException $ex) {
-            echo $ex->getMessage();
-        }
-    }
-
     public function showAvailableVersityUnit($subjectList, $gradeList, $background) {
         $database = $this->connect_database();
         try {
-            $stmt = $database->prepare("SELECT DISTINCT versity, unit
-                                        FROM Requirement
-                                        WHERE background = ?");
-            $stmt->execute(array($background));
+        	switch ($background) {
+        		case 'All':
+        			$stmt = $database->prepare("SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'All'");		
+        			break;
+        		case 'General':
+        			$stmt = $database->prepare("SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'All'
+                                        		UNION
+                                        		SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'General'");
+        			break;
+        		case 'GeneralSci':
+        			$stmt = $database->prepare("SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'All'
+                                        		UNION
+                                        		SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'General'
+                                        		UNION
+                                        		SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'GeneralSci'");
+        			break;
+        		case 'GeneralCom':
+        			$stmt = $database->prepare("SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'All'
+                                        		UNION
+                                        		SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'General'
+                                        		UNION
+                                        		SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'GeneralCom'");
+        			break;
+        		case 'GeneralArts':
+        			$stmt = $database->prepare("SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'All'
+                                        		UNION
+                                        		SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'General'
+                                        		UNION
+                                        		SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'GeneralArts'");
+        			break;
+        		case 'MadrasaSci':
+        			$stmt = $database->prepare("SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'All'
+                                        		UNION
+                                        		SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'General'
+                                        		UNION
+                                        		SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'MadrasaSci'");
+        			break;
+        		case 'MadrasaGen':
+        			$stmt = $database->prepare("SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'All'
+                                        		UNION
+                                        		SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'General'
+                                        		UNION
+                                        		SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'MadrasaGen'");
+        			break;
+        			case 'English':
+        			$stmt = $database->prepare("SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'All'
+                                        		UNION
+                                        		SELECT DISTINCT versity, unit
+                                        		FROM Requirement
+                                        		WHERE background = 'English'");
+        			break;
+        	}
+            $stmt->execute(array());
             $allVersities = [];
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $allVersities[] = $row;
             }
-            $stmt = $database->prepare("SELECT versity, unit, logicType, code 
-                                        FROM Requirement
-                                        WHERE background = ?");
-            $stmt->execute(array($background));
+            switch ($background) {
+        		case 'All':
+        			$stmt = $database->prepare("SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'All'");		
+        			break;
+        		case 'General':
+        			$stmt = $database->prepare("SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'All'
+                                        		UNION
+                                        		SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'General'");
+        			break;
+        		case 'GeneralSci':
+        			$stmt = $database->prepare("SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'All'
+                                        		UNION
+                                        		SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'General'
+                                        		UNION
+                                        		SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'GeneralSci'");
+        			break;
+        		case 'GeneralCom':
+        			$stmt = $database->prepare("SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'All'
+                                        		UNION
+                                        		SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'General'
+                                        		UNION
+                                        		SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'GeneralCom'");
+        			break;
+        		case 'GeneralArts':
+        			$stmt = $database->prepare("SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'All'
+                                        		UNION
+                                        		SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'General'
+                                        		UNION
+                                        		SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'GeneralArts'");
+        			break;
+        		case 'MadrasaSci':
+        			$stmt = $database->prepare("SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'All'
+                                        		UNION
+                                        		SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'General'
+                                        		UNION
+                                        		SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'MadrasaSci'");
+        			break;
+        		case 'MadrasaGen':
+        			$stmt = $database->prepare("SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'All'
+                                        		UNION
+                                        		SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'General'
+                                        		UNION
+                                        		SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'MadrasaGen'");
+        			break;
+        			case 'English':
+        			$stmt = $database->prepare("SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'All'
+                                        		UNION
+                                        		SELECT versity, unit, logicType, code
+                                        		FROM Requirement
+                                        		WHERE background = 'English'");
+        			break;
+        	}
+            $stmt->execute(array());
+            /*$temp = [];
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            	$temp[] = $row;
+            }
+            return $temp;*/
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $key = array_search(array('versity' => $row['versity'], 'unit' => $row['unit']), $allVersities);
                 if ($allVersities[$key]['unit'] === "Rejected") {
                     continue;
                 }
                 switch ($row['logicType']) {
-                    /*
-                    other cases
-                    */
                     case 'addMinimum':
                         $satisfy = $this->addMinimum($subjectList, $gradeList, $row['code']);
                         break;
-					
 					case 'leastSubCount':
 						$satisfy = $this->leastSubjectCount($subjectList, $row['code']);
 						break;
-                    /*
-                    other cases
-                    */
+                    case 'leastSubLeastGrade':
+                        $satisfy = $this->leastSubLeastGrade($subjectList, $gradeList, $row['code']);
+                        break;
+                    case 'maxSubLeastGrade':
+                        $satisfy = $this->maxSubLeastGrade($subjectList, $gradeList, $row['code']);
+                        break;
+                    case 'minLogic':
+                        $satisfy = $this->minLogic($subjectList, $gradeList, $row['code']);
+                        break;
                     default:
                         $satisfy = false;
                 }
@@ -104,120 +270,145 @@ class VersityFinder extends Database{
         }
     }
 	
-	/* Least subject count */
-	
-	public function leastSubjectCount( $subjectList, $code){
+	public function leastSubjectCount ($subjectList, $code){
 		$database = $this->connect_database();
-		$stmt = $database->prepare("SELECT subject, leastCount
-									FROM LeastSubjectCount 
-									WHERE code = ?");
-		$stmt->execute(array($code));
-		$count = 0;
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-			$MinValue = $row['leastCount'];
-			
-			$isHave = in_array ($row['subject'] , $subjectList);
-			if($isHave) {
-				$count++;
+		try {
+			$stmt = $database->prepare("SELECT subject, leastCount
+										FROM LeastSubjectCount
+										WHERE code = ?");
+			$stmt->execute(array($code));
+			$subject = [];
+			$count = 0;
+			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+				$subject[] = $row['subject'];
+				$minCount = $row['leastCount'];
+				if($row['subject'] == "O level") {
+					$tempCount = 0;
+					for ($i=0; $i<count($subjectList); $i++) {
+						if($subjectList[$i] != "O level" && $subjectList[$i] != "A level" && strpos($subjectList[$i], "O level") !== false) {
+							$tempCount++;
+						}
+					}
+					return $tempCount >= $minCount;
+				}
+				if($row['subject'] == "A level") {
+					$tempCount = 0;
+					for ($i=0; $i<count($subjectList); $i++) {
+						if($subjectList[$i] != "O level" && $subjectList[$i] != "A level" && strpos($subjectList[$i], "O level") === false) {
+							$tempCount++;
+						}
+					}
+					return $tempCount >= $minCount;
+				}
+				if(in_array($row['subject'], $subjectList)) {
+					$count++;
+				}
 			}
-		}
-		return $count >= $MinValue;
+			return $count >= $MinValue;
+		} catch (PDOException $ex) {
+            echo $ex->getMessage();
+        }
 	}
 	
-	/* leastSubLeastGrade */
-	
-	public function leastSubLeastGrade($subjectList, $gradeList, $code)
-	{
+	public function leastSubLeastGrade($subjectList, $gradeList, $code) {
 		$database = $this->connect_database();
-		$stmt = $database->prepare("SELECT subject, val, minCount
-									FROM LeastSubLeastGrade
-									WHERE code = ?");
-		$stmt->execute(array($code));
-		$subject = [];
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC))
-		{
-			$subject = $row['subject'];
-			$val = $row['val'];
-			$minCount = $row['minCount'];
-		}
-		if($subject[0] == 'OAAll' || $subject[0] == 'OAll' || $subject[0] == 'AAll' || $subject[0] == 'GAll')
-		{
+		try {
+			$stmt = $database->prepare("SELECT subject, val, minCount
+										FROM LeastSubjectLeastGrade
+										WHERE code = ?");
+			$stmt->execute(array($code));
+			$subject = [];
 			$count = 0;
-			for($j=0; $j<count($gradeList), $j++)
-			{
-				if($gradeList[$j] >= $val)
-					$count++;
+			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+				$subject[] = $row['subject'];
+				$minCount = $row['minCount'];
+				$val = $row['val'];
+				if($row['subject'] == "O level") {
+					$tempCount = 0;
+					for ($i=0; $i<count($subjectList); $i++) {
+						if($subjectList[$i] != "O level" && $subjectList[$i] != "A level" && strpos($subjectList[$i], "O level") !== false && $gradeList[$i] >= $val) {
+							$tempCount++;
+						}
+					}
+					return $tempCount >= $minCount;
+				}
+				if($row['subject'] == "A level") {
+					$tempCount = 0;
+					for ($i=0; $i<count($subjectList); $i++) {
+						if($subjectList[$i] != "O level" && $subjectList[$i] != "A level" && strpos($subjectList[$i], "O level") === false && $gradeList[$i] >= $val) {
+							$tempCount++;
+						}
+					}
+					return $tempCount >= $minCount;
+				}
+				if(($key = array_search($row['subject'], $subjectList)) !== false) {
+					if ($gradeList[$key] >= $val) {
+						$count++;
+					}
+				}
 			}
 			return $count >= $minCount;
-		}
-		$count = 0;
-		for($i=0; i<count($subject); i++)
-		{
-			if (($index = array_search($subject[$i], $subjectList)) === false) {
-				return false;
-			}
-			if($gradeList[$index] >= $val)
-				$count++;
-		}
-		return $count >= $minCount;
+		} catch (PDOException $ex) {
+            echo $ex->getMessage();
+        }
 	}
 	
-	/* max subject least grade */
-	
-	public function maxSubLeastGrade($subjectList, $gradeList, $code)
-	{
+	public function maxSubLeastGrade($subjectList, $gradeList, $code) {
 		$database = $this->connect_database();
-		$stmt = $database->prepare("SELECT subject, val, maxCount
-									FROM LeastSubLeastGrade
-									WHERE code = ?");
-		$stmt->execute(array($code));
-		$subject = [];
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC))
-		{
-			$subject = $row['subject'];
-			$val = $row['val'];
-			$maxCount = $row['maxCount'];
-		}
-		if($subject[0] == 'OAAll' || $subject[0] == 'OAll' || $subject[0] == 'AAll' || $subject[0] == 'GAll')
-		{
+		try {
+			$stmt = $database->prepare("SELECT subject, val, mxaCount
+										FROM MaxSubjectLeastGrade
+										WHERE code = ?");
+			$stmt->execute(array($code));
+			$subject = [];
 			$count = 0;
-			for($j=0; $j<count($gradeList), $j++)
-			{
-				if($gradeList[$j] < $val)
-					$count++;
+			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+				$subject[] = $row['subject'];
+				$maxCount = $row['maxCount'];
+				$val = $row['val'];
+				if($row['subject'] == "O level") {
+					$tempCount = 0;
+					for ($i=0; $i<count($subjectList); $i++) {
+						if($subjectList[$i] != "O level" && $subjectList[$i] != "A level" && strpos($subjectList[$i], "O level") !== false && $gradeList[$i] <= $val) {
+							$tempCount++;
+						}
+					}
+					return $tempCount >= $minCount;
+				}
+				if($row['subject'] == "A level") {
+					$tempCount = 0;
+					for ($i=0; $i<count($subjectList); $i++) {
+						if($subjectList[$i] != "O level" && $subjectList[$i] != "A level" && strpos($subjectList[$i], "O level") === false && $gradeList[$i] <= $val) {
+							$tempCount++;
+						}
+					}
+					return $tempCount <= $maxCount;
+				}
+				if(($key = array_search($row['subject'], $subjectList)) !== false) {
+					if ($gradeList[$key] <= $val) {
+						$count++;
+					}
+				}
 			}
-			return $count > $maxCount;
-		}
-		$count = 0;
-		for($i=0; i<count($subject); i++)
-		{
-			$index;
-			if (($index = array_search($subject[$i], $subjectList)) === false) {
-				return false;
-			}
-			if($gradeList[$index] < $val)
-				$count++;
-		}
-		return $count > $maxCount;
-	
+			return $count <= $MinValue;
+		} catch (PDOException $ex) {
+            echo $ex->getMessage();
+        }
 	}
 	
-	/* min logic */
-	
-	public function minLogic($subject, $grade, $code)
-	{
+	public function minLogic($subjectList, $gradeList, $code) {
 		$database = $this->connect_database();
 		$stmt = $database->prepare("SELECT subject, val
-									FROM LeastSubLeastGrade
+									FROM MinLogic
 									WHERE code = ?");
 		$stmt->execute(array($code));
-		$row = $stmt->fetch(PDO::FETCH_ASSOC)
-		if(($row['subject'] == $subject && ($row['val'] >= $grade))
-			return true;
-		else 
-			return false;
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		if(($key = array_search($row['subject'], $subjectList)) !== false) {
+			if ($gradeList[$key] >= $row['val']){
+				return true;
+			}
+		}
+		return false;
 	}
-
-
-
+}
 ?>

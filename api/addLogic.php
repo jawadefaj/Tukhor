@@ -68,7 +68,7 @@ try {
 					if ($admin->addLogicMinLogic($_POST['versity'], $_POST['unit'], $_POST['background'], $_POST['subject'], $_POST['minimumGrade'])) {}
 					else {
 						$result['success'] = false;
-						$result['message'] = "Something went wrong!";
+						$result['message'] = "Something wentt wrong!";
 					}
 				}	
 				else {
